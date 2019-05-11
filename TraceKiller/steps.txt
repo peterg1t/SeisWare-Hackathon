@@ -1,0 +1,47 @@
+mkvirtualenv airflow_jupyter --python=python3.7
+pip install <list of libraries>
+    - jupyter, ipython, ipykernel
+    - see list of requirements.txt
+sudo ipython kernel install --user --name=airflow_jupyter
+    - Note that I had to use sudo... (not recommended)
+python -m ipykernel install --user --name airflow_test #activate kernel
+pip install nteract_on_jupyter
+pip install papermill
+jupyter notebook # or jupyter nteract
+
+Create a notebook to do something and a parameters file that could change.
+
+Use papermill to create a new notebook with the updated parameters
+eg. papermill path_to_nb/notebook.ipynb output_path/new_nb.ipynb -f parameter_file.yml
+    - Need to make sure that the tags are set in the jupyter notebook
+
+pip freeze > requirements.txt
+
+build Dockerfile
+################ DOCKERFILE ###############
+FROM python:3.7.3-jessie
+
+COPY requirements.txt /home/cchalc/Projects
+
+# will be overwriten should `docker run` pass a proper env
+ENV EXECUTION_ID 111111
+
+# match the name of jupyter's kernel where necessary
+RUN pip install virtualenv
+RUN virtualenv -p python3 airflow_test
+RUN /bin/bash -c "source /home/cchalc/.virtualenvs/airflow_test/bin/activate"
+
+RUN pip install -r /home/cchalc/Projects/requirements.txt
+RUN ipython kernel install --user --name=airflow_test
+
+RUN mkdir notebook
+RUN mkdir notebook/output
+
+COPY test.ipynb ./notebook/code.ipynb
+COPY params.yaml ./notebook/params.yaml
+COPY run.sh ./notebook/run.sh
+
+WORKDIR notebook
+ENTRYPOINT ["bash", "./run.sh"]
+
+################ DOCKERFILE ###############
