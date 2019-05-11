@@ -1,10 +1,10 @@
-mkvirtualenv airflow_jupyter --python=python3.7
+mkvirtualenv swhack --python=python3.7
 pip install <list of libraries>
     - jupyter, ipython, ipykernel
     - see list of requirements.txt
-sudo ipython kernel install --user --name=airflow_jupyter
+sudo ipython kernel install --user --name=swhack
     - Note that I had to use sudo... (not recommended)
-python -m ipykernel install --user --name airflow_test #activate kernel
+python -m ipykernel install --user --name swhack #activate kernel
 pip install nteract_on_jupyter
 pip install papermill
 jupyter notebook # or jupyter nteract
@@ -28,11 +28,11 @@ ENV EXECUTION_ID 111111
 
 # match the name of jupyter's kernel where necessary
 RUN pip install virtualenv
-RUN virtualenv -p python3 airflow_test
-RUN /bin/bash -c "source /home/cchalc/.virtualenvs/airflow_test/bin/activate"
+RUN virtualenv -p python3 swhack
+RUN /bin/bash -c "source /home/cchalc/.virtualenvs/swhack/bin/activate"
 
 RUN pip install -r /home/cchalc/Projects/requirements.txt
-RUN ipython kernel install --user --name=airflow_test
+RUN ipython kernel install --user --name=swhack
 
 RUN mkdir notebook
 RUN mkdir notebook/output
@@ -45,3 +45,5 @@ WORKDIR notebook
 ENTRYPOINT ["bash", "./run.sh"]
 
 ################ DOCKERFILE ###############
+
+docker build .-t task1

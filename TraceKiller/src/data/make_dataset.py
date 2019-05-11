@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
+#from __future__ import absolute_import, division, print_function
 import click
 import logging
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+#@click.command()
+#@click.argument('input_filepath', type=click.Path(exists=True))
+#@click.argument('output_filepath', type=click.Path())
+def main():
     """ Runs data processing scripts to create raw data (../data)
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
-    from __future__ import absolute_import, division, print_function
 
     import os
     import sys
@@ -28,7 +28,6 @@ def main(input_filepath, output_filepath):
 
     import pandas as pd
     import numpy as np
-    import matplotlib.pyplot as plt
 
     x = np.arange(0, input_size, 1)
     y = np.random.gamma(2., 2., input_size)
