@@ -1,0 +1,1 @@
+papermill notebooks/Example01.ipynb notebooks/output/Example01_out.ipynb -f notebooks/parameters/params.yml
