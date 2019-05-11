@@ -26,7 +26,6 @@ def main(input_filepath, output_filepath):
     # Parameters
     input_size = 500
 
-    %matplotlib inline
     import pandas as pd
     import numpy as np
     import matplotlib.pyplot as plt
